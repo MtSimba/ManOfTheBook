@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
+    
     public Transform attackPoint;
-    public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
+    public LayerMask enemies;
+
+    public float attackRange = 1f;
+    public int attackDamage = 20;
 
     // Update is called once per frame
     void Update()
@@ -22,18 +25,19 @@ public class PlayerCombat : MonoBehaviour
     {
         animator.SetTrigger("attack");
 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemies);
 
         foreach (Collider enemy in hitEnemies)
         {
-            Debug.Log("Hit!" + enemy.name);
+            Debug.Log("hit enemy!");
+            enemy.GetComponent<EnemyBehaviour>().TakeDamage(attackDamage);
         }
 
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
-        if (attackPoint)
+        if (attackPoint == null)
         {
             return;
         }

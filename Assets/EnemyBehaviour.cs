@@ -13,8 +13,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     public Animator animator;
 
-
-    public float health;
+    private bool dead;
+    public int maxHealth = 100;
+    private int currentHealth;
 
     //Patrolling
     public Vector3 walkPoint;
@@ -31,6 +32,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+        dead = false;
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
 
@@ -41,15 +44,15 @@ public class EnemyBehaviour : MonoBehaviour
         PlayerInSightRange = Physics.CheckSphere(transform.position, sightRange, WhatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, AttackRange, WhatIsPlayer);
 
-        if (!PlayerInSightRange && !playerInAttackRange)
+        if (!dead && !PlayerInSightRange && !playerInAttackRange)
         {
             Patrolling();
         }
-        if (PlayerInSightRange && !playerInAttackRange) 
+        if (!dead && PlayerInSightRange && !playerInAttackRange) 
         {
             ChasePlayer();
         }
-        if (PlayerInSightRange && playerInAttackRange)
+        if (!dead && PlayerInSightRange && playerInAttackRange)
         {
             AttackPlayer();
         }
@@ -118,9 +121,17 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        currentHealth -= damage;
 
-        if(health <= 0) Invoke(nameof(DestroyEnemy),0.5f);
+        animator.SetTrigger("hurt");
+
+        if (currentHealth <= 0)
+        {
+            dead = true;
+            animator.SetTrigger("death");
+            Invoke(nameof(DestroyEnemy), 6f);
+
+        }
     }
 
     private void DestroyEnemy()
