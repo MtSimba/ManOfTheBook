@@ -9,8 +9,17 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPoint;
     public LayerMask enemies;
 
+    private bool dead;
+    public int maxHealth = 100;
+    private int currentHealth;
+
     public float attackRange = 1f;
     public int attackDamage = 20;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
 
     // Update is called once per frame
     void Update()
@@ -33,6 +42,31 @@ public class PlayerCombat : MonoBehaviour
             enemy.GetComponent<EnemyBehaviour>().TakeDamage(attackDamage);
         }
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        animator.SetTrigger("hurt");
+
+        if (currentHealth <= 0)
+        {
+            dead = true;
+            animator.SetTrigger("death");
+            Invoke(nameof(Death), 6f);
+
+        }
+    }
+
+    public bool isDead()
+    {
+        return dead == true ? true : false;
+    }
+
+    private void Death()
+    {
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()

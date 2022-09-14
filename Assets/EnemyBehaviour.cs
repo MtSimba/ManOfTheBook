@@ -17,6 +17,9 @@ public class EnemyBehaviour : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
+    public int attackDamage = 20;
+
+
     //Patrolling
     public Vector3 walkPoint;
     private bool walkPointSet;
@@ -96,7 +99,7 @@ public class EnemyBehaviour : MonoBehaviour
         agent.SetDestination(player.position);
         animator.SetBool("running", true);
     }
-
+    
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
@@ -106,9 +109,20 @@ public class EnemyBehaviour : MonoBehaviour
         if (!alreadyAttacked)
         {
             animator.SetBool("running", false);
-            animator.SetTrigger("attack");
-            Debug.Log("Attacking Player");
 
+            Collider[] hitPlayer = Physics.OverlapSphere(player.position, AttackRange, WhatIsPlayer);
+
+            foreach (Collider player in hitPlayer)
+            {
+                if (!player.GetComponent<PlayerCombat>().isDead())
+                {
+                    animator.SetTrigger("attack");
+                    Debug.Log("hit enemy!");
+                    player.GetComponent<PlayerCombat>().TakeDamage(attackDamage);
+                }
+                
+               
+            }
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttack);
         }
