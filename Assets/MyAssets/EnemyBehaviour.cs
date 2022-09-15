@@ -17,6 +17,9 @@ public class EnemyBehaviour : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
+    [SerializeField] private healthbar _healthbar;
+
+
     public int attackDamage = 20;
 
 
@@ -39,6 +42,7 @@ public class EnemyBehaviour : MonoBehaviour
         dead = false;
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        _healthbar.UpdateHealthbar(maxHealth, currentHealth);
 
     }
 
@@ -136,6 +140,8 @@ public class EnemyBehaviour : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        _healthbar.UpdateHealthbar(maxHealth, currentHealth);
+
 
         animator.SetTrigger("hurt");
 

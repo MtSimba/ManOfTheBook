@@ -13,12 +13,16 @@ public class PlayerCombat : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
-    public float attackRange = 1f;
+    [SerializeField] private healthbar _healthbar;
+
+    float attackRange = 1f;
     public int attackDamage = 20;
 
     void Start()
     {
         currentHealth = maxHealth;
+
+        _healthbar.UpdateHealthbar(maxHealth,currentHealth);
     }
 
     // Update is called once per frame
@@ -47,6 +51,8 @@ public class PlayerCombat : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        _healthbar.UpdateHealthbar(maxHealth, currentHealth);
+
 
         animator.SetTrigger("hurt");
 
