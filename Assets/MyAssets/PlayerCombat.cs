@@ -13,6 +13,9 @@ public class PlayerCombat : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
+    private bool alreadyAttacked;
+
+
     [SerializeField] private healthbar _healthbar;
 
     float attackRange = 1f;
@@ -20,6 +23,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
+        alreadyAttacked = false;
         currentHealth = maxHealth;
 
         _healthbar.UpdateHealthbar(maxHealth,currentHealth);
@@ -28,9 +32,13 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!alreadyAttacked && Input.GetMouseButtonDown(0))
         {
+            alreadyAttacked = true;
             Attack();
+        }
+        else{
+            alreadyAttacked = false;
         }
     }
 
