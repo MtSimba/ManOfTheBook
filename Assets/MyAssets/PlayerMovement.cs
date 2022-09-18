@@ -5,49 +5,147 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
+    public Transform cam;
+    [Header("Movement")]
+    public Transform orientation;
     public Animator animator;
+    public float groundDrag;
+    public float jumpForce;
+    public float jumpCoolDown;
+    public float airMultiplier;
+    private bool readyToJump;
 
-    #region Singleton
+    [Header("KeyBinds")]
+    public KeyCode jumpKey = KeyCode.Space;
+
+    [Header("Ground Check")]
+    public float PlayerHeight;
+    public LayerMask WhatisGround;
+    private bool grounded;
+    /*#region Singleton
 
     public static PlayerMovement instance;
 
-    #endregion
+    #endregion*/
 
-    public GameObject player;
+    public float rotationSpeed = 0.25f;
+    public float moveSpeed = 6f;
 
-    public float speed = 6f;
+    private float horizontalInput;
+    private float verticalInput;
 
-    private float turnSmoothVelocity;
+    private Vector3 moveDirection;
 
-    public float turnSmoothTIme = 0.1f;
+    private Rigidbody rb;
 
-    void Awake()
+    void Start()
     {
-        instance = this;
+        animator.SetBool("running", false);
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+        readyToJump = true;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        animator.SetFloat("Horizontal", horizontal);
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        grounded = Physics.Raycast(transform.position, Vector3.down, PlayerHeight * 0.5f + 0.2f, WhatisGround);
 
-        if (direction.magnitude >= 0.1f)
-        {
-            animator.SetBool("running", true);
-            float targetAngle = MathF.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
-                turnSmoothTIme);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            controller.Move(direction * speed * Time.deltaTime);
+        playerInput();
+        rotation();
+        SpeedControl();
 
-        }
+        if (grounded)
+            rb.drag = groundDrag;
         else
-        {
-            animator.SetBool("running", false);
+            rb.drag = 0;
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    private void playerInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        { 
+            animator.SetTrigger("jumping");
+            readyToJump = false;
+            Jump();
+
+            Invoke(nameof(ResetJump),jumpCoolDown);
         }
     }
+
+    private void MovePlayer()
+    {
+        moveDirection = new Vector3(horizontalInput,0f,verticalInput);
+        moveDirection = Quaternion.AngleAxis(cam.rotation.eulerAngles.y, Vector3.up) * moveDirection;
+        moveDirection.Normalize();
+        if (moveDirection.magnitude >= 0.1f)
+        {
+            transform.forward = moveDirection;
+            
+            animator.SetBool("running", true);
+        }
+        else
+            animator.SetBool("running", false);
+
+
+        if (grounded)
+        {
+            transform.Translate(moveDirection * moveSpeed  * Time.deltaTime, Space.World);
+            //rb.AddForce(moveDirection * moveSpeed * 10f,ForceMode.Force);
+        }
+        else if (!grounded)
+        {
+            transform.Translate(moveDirection * moveSpeed  * Time.deltaTime * airMultiplier, Space.World);
+            //rb.AddForce(moveDirection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+
+    }
+
+    private void rotation()
+    {
+        Vector3 positionToLookAt;
+
+        positionToLookAt.x = moveDirection.x;
+        positionToLookAt.y = 0.0f;
+        positionToLookAt.z = moveDirection.z;
+
+        Quaternion currentRotation = transform.rotation;
+
+        if (moveDirection.magnitude > 0f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+       
+    }
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rb.velocity.x,0f,rb.velocity.z);
+
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limited = flatVel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limited.x,rb.velocity.y,limited.z);
+        }
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        rb.AddForce(transform.up * jumpForce,ForceMode.Impulse);
+    }
+
+    private void ResetJump()
+    {
+        readyToJump = true;
+    }
+
 }
