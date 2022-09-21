@@ -12,9 +12,20 @@ public class move : MonoBehaviour
     public Transform cam;
     public Transform player;
 
-    public float speed = 6f;
-    public float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
+    [SerializeField]
+    public float _speed = 30f;
+    [SerializeField]
+    public float _rotationSpeed = 90f;
+    float _turnSmoothVelocity;
+    [SerializeField]
+    private float _gravity = -9.81f;
+    [SerializeField]
+    private float _jumpSpeed = 3.5f;
+
+    private Vector3 moveVelocity;
+    private Vector3 turnVelocity;
+
+    private float targetAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -30,32 +41,37 @@ public class move : MonoBehaviour
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-
-            animator.SetFloat("Horizontal", horizontalInput);
-            animator.SetFloat("Vertical", verticalInput);
 
 
-            if (direction.magnitude >= 0.1f)
+            if (controller.isGrounded)
             {
-                animator.SetBool("running", true);
+                if (verticalInput > 0f)
+                    animator.SetBool("running", true);
+                else
+                    animator.SetBool("running", false);
 
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                moveVelocity = transform.forward * _speed * verticalInput;
+                turnVelocity = transform.up * _rotationSpeed * horizontalInput;
+                if (Input.GetButtonDown("Jump"))
+                {
+                    animator.SetTrigger("jumping");
+                    moveVelocity.y = _jumpSpeed;
+                }
+            }
+            //targetAngle = Mathf.Atan2(moveVelocity.x, moveVelocity.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _rotationSpeed);
+
+            moveVelocity.y += _gravity * Time.deltaTime;
+            controller.Move(moveVelocity * Time.deltaTime);
+            transform.Rotate(turnVelocity * Time.deltaTime);
+        }
+    }
+}
+
+/*
+ *  float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _rotationSpeed);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-                if (moveDirection.x > 0)
-                    transform.forward = moveDirection;
-
-                controller.Move(moveDirection.normalized * speed * Time.deltaTime);
-            }
-            else
-            {
-                animator.SetBool("running", false);
-            }
-        }
-        
-    }
-}
+ */
