@@ -51,6 +51,9 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("hit enemy!");
+            
+            SoundManager.PlaySound("attack");
+
             enemy.GetComponent<EnemyBehaviour>().TakeDamage(attackDamage);
         }
 
