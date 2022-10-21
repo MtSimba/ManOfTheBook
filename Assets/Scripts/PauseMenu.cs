@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool gamePaused = false;
     public GameObject pauseMenuUI;
+    public GameObject achievementsMenuUI;
 
     void Start() {
         Resume();
@@ -27,7 +28,7 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    private void Resume() {
+    public void Resume() {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gamePaused = false;
@@ -41,5 +42,19 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gamePaused = true;
+    }
+
+    public void Achievements(){
+        Debug.Log("Pressed Achievements");
+        achievementsMenuUI.SetActive(true);
+        pauseMenuUI.SetActive(false);
+    }
+
+    public void Settings(){
+        Debug.Log("Pressed Settings");
+    }
+
+    public void Quit(){
+        Debug.Log("Pressed Quit");
     }
 }

@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 {
 
     public static AudioClip swordHitSound;
+    public static AudioClip jumpSound;
     static AudioSource audioSource;
 
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class SoundManager : MonoBehaviour
     {
         Debug.Log("Soundmanager start");
         swordHitSound = Resources.Load<AudioClip>("SwordHit");
+        jumpSound = Resources.Load<AudioClip>("Jump");
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -24,8 +26,11 @@ public class SoundManager : MonoBehaviour
 
     public static void PlaySound(string soundType){
         switch(soundType){
-            case "attack":
+            case "Attack":
                 audioSource.PlayOneShot(swordHitSound);
+                break;
+            case "Jump":
+                audioSource.PlayOneShot(jumpSound);
                 break;
         }
     }

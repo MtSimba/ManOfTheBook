@@ -52,7 +52,7 @@ public class PlayerCombat : MonoBehaviour
         {
             Debug.Log("hit enemy!");
             
-            SoundManager.PlaySound("attack");
+            SoundManager.PlaySound("Attack");
 
             enemy.GetComponent<EnemyBehaviour>().TakeDamage(attackDamage);
         }

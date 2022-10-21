@@ -27,6 +27,9 @@ public class move : MonoBehaviour
 
     private float targetAngle;
 
+    //Achievement
+    public static event Action<string> PointOfInterest;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +57,11 @@ public class move : MonoBehaviour
                 turnVelocity = transform.up * _rotationSpeed * horizontalInput;
                 if (Input.GetButtonDown("Jump"))
                 {
+                    //Achievement
+                    PointOfInterest("Jump");
+
+                    SoundManager.PlaySound("Jump");
+
                     animator.SetTrigger("jumping");
                     moveVelocity.y = _jumpSpeed;
                 }
