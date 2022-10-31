@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
@@ -14,7 +15,7 @@ public class PlayerCombat : MonoBehaviour
     private int currentHealth;
 
     private bool alreadyAttacked;
-
+    public Interactable focus;
 
     [SerializeField] private healthbar _healthbar;
 
@@ -40,7 +41,9 @@ public class PlayerCombat : MonoBehaviour
         else{
             alreadyAttacked = false;
         }
+
     }
+
 
     void Attack()
     {

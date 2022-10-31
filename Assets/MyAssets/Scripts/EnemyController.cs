@@ -6,23 +6,24 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     public float lookRadius = 10f;
-    public GameObject Player;
+    private Transform target;
     public NavMeshAgent agent;
     public Animator animator;
      // Start is called before the first frame update
     void Start()
     {
+        target = PlayerMovement.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(Player.transform.position, transform.position);
+        float distance = Vector3.Distance(target.position, transform.position);
 
         if (distance <= lookRadius)
         {
-            agent.SetDestination(Player.transform.position);
+            agent.SetDestination(target.position);
             animator.SetBool("running", true);
 
             if (distance <= agent.stoppingDistance)
@@ -40,9 +41,9 @@ public class EnemyController : MonoBehaviour
 
     void FaceTarget()
     {
-        Vector3 direction = (Player.transform.position - this.transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.y));
-        transform.rotation = Quaternion.Slerp(this.transform.rotation,lookRotation,Time.deltaTime);
+        Vector3 direction = (target.position - this.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation,Time.deltaTime * 5f);
     }
 
     void OnDrawGizmosSelected()

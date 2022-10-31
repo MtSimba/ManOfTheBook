@@ -4,19 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class move : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
+    #region Singleton
+    [SerializeField]
+    public static PlayerMovement instance;
 
+    void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+
+    public GameObject player;
     public CharacterController controller;
     public Animator animator;
     public Transform cam;
-    public Transform player;
 
     [SerializeField]
     public float _speed = 30f;
     [SerializeField]
     public float _rotationSpeed = 90f;
-    float _turnSmoothVelocity;
     [SerializeField]
     private float _gravity = -9.81f;
     [SerializeField]
@@ -31,13 +39,13 @@ public class move : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!player.GetComponent<PlayerCombat>().isDead())
+        if (!instance.GetComponent<PlayerCombat>().isDead())
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
@@ -58,8 +66,6 @@ public class move : MonoBehaviour
                     moveVelocity.y = _jumpSpeed;
                 }
             }
-            //targetAngle = Mathf.Atan2(moveVelocity.x, moveVelocity.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _rotationSpeed);
 
             moveVelocity.y += _gravity * Time.deltaTime;
             controller.Move(moveVelocity * Time.deltaTime);
@@ -67,11 +73,3 @@ public class move : MonoBehaviour
         }
     }
 }
-
-/*
- *  float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _rotationSpeed);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-                Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
- */
