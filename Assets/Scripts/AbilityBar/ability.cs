@@ -6,5 +6,5 @@ using UnityEngine;
 public class Ability
 {
     public Spells spells;
-    public Action activateAbility;
+    public ProjectileShooter projectileShooter;
 }

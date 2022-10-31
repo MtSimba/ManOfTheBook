@@ -8,14 +8,14 @@ public class AbilitySystem
     private List<Ability> abilitiesList;
 
     // Create the different abilities
-    public AbilitySystem()
+    public AbilitySystem(Camera cam, Transform firePoint)
     {
         abilitiesList = new List<Ability>();
 
-        abilitiesList.Add(new Ability { spells = Spells.Fireball });
-        abilitiesList.Add(new Ability { spells = Spells.Frostball });
-        abilitiesList.Add(new Ability { spells = Spells.Earthball });
-        abilitiesList.Add(new Ability { spells = Spells.Waterball });
+        abilitiesList.Add(new Ability { spells = Spells.Fireball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint ) });
+        abilitiesList.Add(new Ability { spells = Spells.Frostball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint) });
+        abilitiesList.Add(new Ability { spells = Spells.Earthball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint) });
+        abilitiesList.Add(new Ability { spells = Spells.Waterball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint) });
     }
 
     public List<Ability> getAbilitiesList()
@@ -28,22 +28,22 @@ public class AbilitySystem
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            abilitiesList[0].activateAbility();
+            abilitiesList[0].projectileShooter.ShootProjectile();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            abilitiesList[1].activateAbility();
+            abilitiesList[1].projectileShooter.ShootProjectile();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            abilitiesList[2].activateAbility();
+            abilitiesList[2].projectileShooter.ShootProjectile();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            abilitiesList[3].activateAbility();
+            abilitiesList[3].projectileShooter.ShootProjectile();
         }
     }
 }
