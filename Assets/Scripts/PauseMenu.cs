@@ -7,7 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool gamePaused = false;
     public GameObject pauseMenuUI;
-    public GameObject achievementsMenuUI;
+    
 
     void Start() {
         Resume();
@@ -21,11 +21,6 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-    }
-
-    public void DidTapMainMenu() {
-        Debug.Log("Did exit to main menu");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public void Resume() {
@@ -44,17 +39,8 @@ public class PauseMenu : MonoBehaviour
         gamePaused = true;
     }
 
-    public void Achievements(){
-        Debug.Log("Pressed Achievements");
-        achievementsMenuUI.SetActive(true);
-        pauseMenuUI.SetActive(false);
-    }
-
-    public void Settings(){
-        Debug.Log("Pressed Settings");
-    }
-
     public void Quit(){
-        Debug.Log("Pressed Quit");
+        //TODO Save game?
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

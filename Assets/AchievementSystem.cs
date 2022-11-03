@@ -1,16 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class AchievementSystem : MonoBehaviour
 {
     //Stats to be monitored
     int jumps;
 
-
     // List of achievements
-    List<int> validJumpCounts = new List<int> { 1, 3, 5, 10, 20 };
+    public static List<Achievement> achievementList = new List<Achievement> 
+    {
+        new Achievement("JumpAchi1", "Jump 1 time.", "Jump", 1),
+        new Achievement("JumpAchi3", "Jump 3 times.", "Jump", 3),
+        new Achievement("JumpAchi5", "Jump 5 times.", "Jump", 5),
+        new Achievement("JumpAchi10", "Jump 10 times.", "Jump", 10),
+        new Achievement("JumpAchi25", "Jump 25 times.", "Jump", 25)
+    };
 
+    //Popup
+    public GameObject popUp;
+    public Image achievementIconHolder;
+    public TMP_Text achievementDescription;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +33,10 @@ public class AchievementSystem : MonoBehaviour
         // Setup initial achievement stats
         jumps = 0;
 
+        // Find out why start is called twice. It breaks popup and achievements
         move.PointOfInterest += POIReached;
+
+        // We need to make sure that all achievements are saved, also when the game is quit and reopened!
     }
 
 
@@ -35,23 +51,63 @@ public class AchievementSystem : MonoBehaviour
     {
         if(poi == "Jump"){
             jumps = jumps + 1;
-            CheckAchievements(poi, jumps, validJumpCounts);
+            CheckAchievements(poi, jumps);
         }
     }
 
 
-    private void CheckAchievements(string poi, int count, List<int> validCounts){
-        string baseAchievementKey = "Achievement-" + poi + "-";
+    private void CheckAchievements(string poi, int count){
+        string baseAchievementKey = "Achievement-";
 
-        if (validCounts.Contains(count)){
-            string achievementKey = baseAchievementKey + count.ToString();
+        foreach (Achievement achievement in achievementList)
+        {
+            if (achievement.pointOfInterest == poi && achievement.achievementReached != true && count >= achievement.countGoal)
+            {
+                achievement.achievementReached = true;
 
-                if (PlayerPrefs.GetInt(achievementKey) == 1){
-                    return;
-                }
-
+                string achievementKey = baseAchievementKey + achievement.name;
                 PlayerPrefs.SetInt(achievementKey, 1);
+
                 Debug.Log("Unlocked " + achievementKey);
+
+
+                
+                //Image does not show up on popup?
+                Sprite sprite = Resources.Load("Sprites/" + achievement.name) as Sprite;
+                achievementIconHolder.sprite = sprite;
+                achievementDescription.text = achievement.description;
+
+                StartCoroutine(ShowPopup());
+            }
         }
+    }
+
+
+    IEnumerator ShowPopup()
+    {
+        popUp.SetActive(true);
+        
+        yield return new WaitForSeconds(3);
+
+        popUp.SetActive(false);
+    }
+}
+
+
+public class Achievement
+{
+    public string name;
+    public string description;
+    public string pointOfInterest;
+    public int countGoal;
+    public bool achievementReached;
+
+    public Achievement(string Name, string Description, string POI, int CountGoal)
+    {
+        name = Name;
+        description = Description;
+        pointOfInterest = POI;
+        countGoal = CountGoal;
+        achievementReached = false;
     }
 }
