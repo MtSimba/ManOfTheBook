@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-	public float radius = 1f;               // How close do we need to be to interact?
+	public float radius = 2.5f;               // How close do we need to be to interact?
     public Transform interactionTransform;  // The transform from where we interact in case you want to offset it
 
     bool isFocus = false;   // Is this interactable currently being focused?
