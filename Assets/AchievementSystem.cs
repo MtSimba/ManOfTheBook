@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//TODO: Bug when starting from Main Menu scene, where AchievementSystem is not initialized mby? Jump achi doesnt work
+
 public class AchievementSystem : MonoBehaviour
 {
     //Stats to be monitored
     int jumps;
 
     // List of achievements
+    // TODO: Use these for Achievement Menu
     public static List<Achievement> achievementList = new List<Achievement> 
     {
         new Achievement("JumpAchi1", "Jump 1 time.", "Jump", 1),
@@ -28,12 +31,16 @@ public class AchievementSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Resetting achievements - delete layer when we save games
         PlayerPrefs.DeleteAll();
+
+        //Get components
+        achievementIconHolder.GetComponent<Image>();
 
         // Setup initial achievement stats
         jumps = 0;
 
-        // Find out why start is called twice. It breaks popup and achievements
+        // Subscribe to events
         move.PointOfInterest += POIReached;
 
         // We need to make sure that all achievements are saved, also when the game is quit and reopened!
@@ -68,12 +75,9 @@ public class AchievementSystem : MonoBehaviour
                 string achievementKey = baseAchievementKey + achievement.name;
                 PlayerPrefs.SetInt(achievementKey, 1);
 
-                Debug.Log("Unlocked " + achievementKey);
+                // Debug.Log("Unlocked " + achievementKey);
 
-
-                
-                //Image does not show up on popup?
-                Sprite sprite = Resources.Load("Sprites/" + achievement.name) as Sprite;
+                Sprite sprite = Resources.Load<Sprite>("Sprites/" + achievement.name);
                 achievementIconHolder.sprite = sprite;
                 achievementDescription.text = achievement.description;
 
@@ -86,6 +90,8 @@ public class AchievementSystem : MonoBehaviour
     IEnumerator ShowPopup()
     {
         popUp.SetActive(true);
+
+        //TODO: Play achievement sound
         
         yield return new WaitForSeconds(3);
 

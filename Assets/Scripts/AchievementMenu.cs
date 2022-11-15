@@ -9,7 +9,7 @@ public class AchievementMenu : MonoBehaviour
     public static bool gamePaused = false;
     public GameObject achievementsMenuUI;
 
-    public TMP_Text jump_1_achievement; //TODO: Er der en bedre måde? ;)
+    public TMP_Text jump_1_achievement; //TODO
     public TMP_Text jump_3_achievement;
     public TMP_Text jump_5_achievement;
     public TMP_Text jump_10_achievement;

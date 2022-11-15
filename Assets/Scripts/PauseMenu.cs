@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Quit(){
-        //TODO Save game?
+        //TODO: Save game?
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
