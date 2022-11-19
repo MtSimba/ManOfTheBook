@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class IntroDialog : MonoBehaviour
 {
 
+    public SceneChangerScript levelChanger;
     public TMPro.TMP_Text dialogText;
+
     private int counter = 0;
 
     private string[] dialogs = new string[] { 
@@ -34,6 +36,7 @@ public class IntroDialog : MonoBehaviour
     void Start()
     {
         dialogText.text = dialogs[counter] + " ...";
+        levelChanger = GameObject.FindGameObjectWithTag("LevelChanger").GetComponent<SceneChangerScript>();
     }
 
     void Update() {
@@ -46,7 +49,7 @@ public class IntroDialog : MonoBehaviour
         counter++;
 
         if(counter >= dialogs.Length) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            levelChanger.GoNextScene();
         } else {
             dialogText.text = dialogs[counter] + " ...";
         }
