@@ -20,7 +20,7 @@ public class Interactable : MonoBehaviour
     {
         // If we are currently being focused
         // and we haven't already interacted with the object
-        if (isFocus && !hasInteracted)
+        if (isFocus )
         {
             // If we are close enough
             float distance = Vector3.Distance(player.position, interactionTransform.position);

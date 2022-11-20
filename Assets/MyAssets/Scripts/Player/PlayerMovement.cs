@@ -16,16 +16,14 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
-    public GameObject player;
-    public CharacterController controller;
-    public Animator animator;
-    public Camera cam;
-    private Interactable focus;
-    [SerializeField] private Transform interactionTransform;  // The transform from where we interact in case you want to offset it
+    [SerializeField] public GameObject player;
+    [SerializeField] public CharacterController controller;
+    [SerializeField] public Animator animator;
+    [SerializeField] public Camera cam;
+    [SerializeField] public Interactable focus;  // Our current focus: Item, Enemy etc.
+    [SerializeField] public Transform interactionTransform;  // The transform from where we interact in case you want to offset it
     [SerializeField] private LayerMask mask;
     [SerializeField] private float radius = 0.5f;               // How close do we need to be to interact?
-
-    private readonly Collider[] colliders = new Collider[3];
 
 
     [SerializeField]
@@ -45,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = true;
         cam = Camera.main;
     }
 
@@ -57,8 +55,6 @@ public class PlayerMovement : MonoBehaviour
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
-            numFound = Physics.OverlapSphereNonAlloc(interactionTransform.position, radius, colliders, mask);
-
 
             if (controller.isGrounded)
             {
@@ -67,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                     animator.SetBool("running", false);
 
-                moveVelocity = transform.forward * _speed * verticalInput;
+                moveVelocity = transform.forward * verticalInput;
                 turnVelocity = transform.up * _rotationSpeed * horizontalInput;
                 if (Input.GetButtonDown("Jump"))
                 {
@@ -75,12 +71,17 @@ public class PlayerMovement : MonoBehaviour
                     moveVelocity.y = _jumpSpeed;
                 }
 
-                if (numFound > 0 && Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    var interactable = colliders[0].GetComponent<Interactable>();
-                    if (interactable != null)
+                    Collider[] itemsInRange = Physics.OverlapSphere(interactionTransform.position, 1.5f, mask);
+
+                    foreach (Collider item in itemsInRange)
                     {
-                        SetFocus(interactable);
+                        Interactable interactable = item.GetComponent<Interactable>();
+                        if (interactable != null)
+                        {
+                            SetFocus(interactable);
+                        }
                     }
                 }
 
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             moveVelocity.y += _gravity * Time.deltaTime;
-            controller.Move(moveVelocity * Time.deltaTime);
+            controller.Move(moveVelocity * _speed * Time.deltaTime);
             transform.Rotate(turnVelocity * Time.deltaTime);
         }
     }
