@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class teleporter : MonoBehaviour
@@ -9,9 +7,6 @@ public class teleporter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Player.transform.position = teleportTarget.transform.position;
-        Player.transform.forward = -Player.transform.forward;
-        
-
-    }
+        Player.transform.SetPositionAndRotation(teleportTarget.transform.position, Quaternion.LookRotation(teleportTarget.transform.up));
+        }
 }
