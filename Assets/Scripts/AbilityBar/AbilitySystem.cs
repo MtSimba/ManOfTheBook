@@ -6,16 +6,42 @@ public class AbilitySystem
 {
     // Store the abilities that we can use
     private List<Ability> abilitiesList;
-
+    private float cooldown;
+    private float temp;
+    private bool isOnCooldown;
     // Create the different abilities
     public AbilitySystem(Camera cam, Transform firePoint)
     {
         abilitiesList = new List<Ability>();
 
-        abilitiesList.Add(new Ability { spells = Spells.Fireball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint ) });
-        abilitiesList.Add(new Ability { spells = Spells.Frostball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint) });
-        abilitiesList.Add(new Ability { spells = Spells.Earthball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint) });
-        abilitiesList.Add(new Ability { spells = Spells.Waterball, projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint) });
+        abilitiesList.Add(new Ability
+        {
+            spells = Spells.Fireball,
+            projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint),
+            sprite = Resources.Load<Sprite>("Sprites/fireball-red-3")
+    });
+        abilitiesList.Add(new Ability
+        {
+            spells = Spells.Frostball,
+            projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint),
+            sprite = Resources.Load<Sprite>("Sprites/fireball-sky-3")
+        });
+        abilitiesList.Add(new Ability
+        {
+            spells = Spells.Earthball,
+            projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint),
+            sprite = Resources.Load<Sprite>("Sprites/protect-acid-2")
+        });
+        abilitiesList.Add(new Ability
+        {
+            spells = Spells.Waterball,
+            projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint),
+            sprite = Resources.Load<Sprite>("Sprites/evil-eye-eerie-3")
+        });
+
+        cooldown = 5;
+        temp = 1;
+        isOnCooldown = false;
     }
 
     public List<Ability> getAbilitiesList()
@@ -23,27 +49,52 @@ public class AbilitySystem
         return this.abilitiesList;
     }
 
+    private void activateCooldown()
+    {
+        isOnCooldown = true;
+        temp = 1;
+        Debug.Log("Ability shot");
+    }
+
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (isOnCooldown == true)
         {
-            abilitiesList[0].projectileShooter.ShootProjectile();
-        }
+            Debug.Log("Now on cooldown");
+            temp -= 1 / cooldown * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            abilitiesList[1].projectileShooter.ShootProjectile();
+            if (temp <= 0)
+            {
+                Debug.Log("Cooldown over");
+                isOnCooldown = false;
+                temp = 0;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (isOnCooldown == false)
         {
-            abilitiesList[2].projectileShooter.ShootProjectile();
-        }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                abilitiesList[0].projectileShooter.ShootProjectile();
+                activateCooldown();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                abilitiesList[1].projectileShooter.ShootProjectile();
+                activateCooldown();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            abilitiesList[3].projectileShooter.ShootProjectile();
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                abilitiesList[2].projectileShooter.ShootProjectile();
+                activateCooldown();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                abilitiesList[3].projectileShooter.ShootProjectile();
+                activateCooldown();
+            }
         }
     }
 }

@@ -7,4 +7,5 @@ public class Ability
 {
     public Spells spells;
     public ProjectileShooter projectileShooter;
+    public Sprite sprite;
 }

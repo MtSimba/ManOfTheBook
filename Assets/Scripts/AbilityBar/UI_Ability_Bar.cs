@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Ability_Bar : MonoBehaviour
 {
@@ -22,7 +23,6 @@ public class UI_Ability_Bar : MonoBehaviour
     private void updateVisual()
     {
         List<Ability> abilitiesList = abilitySystem.getAbilitiesList();
-        Debug.LogWarning(abilitiesList.Count);
         for (int i = 0; i < abilitiesList.Count; i++)
         {
             Ability ability = abilitiesList[i];
@@ -30,6 +30,8 @@ public class UI_Ability_Bar : MonoBehaviour
             abilitySlotTransform.gameObject.SetActive(true);
             RectTransform abilitySlotRectTransform = abilitySlotTransform.GetComponent<RectTransform>();
             abilitySlotRectTransform.anchoredPosition = new Vector2(120f * i, 50f);
+            abilitySlotTransform.Find("spellPicture").GetComponent<Image>().sprite = ability.sprite;
+            Debug.Log(ability.sprite);
             abilitySlotTransform.Find("number").GetComponent<TMPro.TextMeshProUGUI>().SetText((i + 1).ToString());
         }
 
