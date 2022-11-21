@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     public static AudioClip swordHitSound;
     public static AudioClip jumpSound;
     public static AudioClip achievementSound;
+    public static AudioClip runningSound;
     static AudioSource audioSource;
 
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class SoundManager : MonoBehaviour
         swordHitSound = Resources.Load<AudioClip>("SwordHit");
         jumpSound = Resources.Load<AudioClip>("Jump");
         achievementSound = Resources.Load<AudioClip>("Achievement");
+        runningSound = Resources.Load<AudioClip>("Running");
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -34,5 +36,22 @@ public class SoundManager : MonoBehaviour
                 audioSource.PlayOneShot(achievementSound);
                 break;
         }
+    }
+
+
+    public static void PlaySoundContinuously(string soundType){
+        switch(soundType){
+            case "Running":
+                if (!audioSource.isPlaying){
+                    audioSource.clip = runningSound;
+                    audioSource.Play(0);
+                }
+                break;
+        }
+    }
+
+    
+    public static void PlaySoundStop(){
+        audioSource.Stop();
     }
 }

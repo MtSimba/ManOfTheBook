@@ -17,6 +17,7 @@ public class AchievementSystem : MonoBehaviour
         new Achievement("JumpAchi5", "Jump 5 times.", "Jump", 5),
         new Achievement("JumpAchi10", "Jump 10 times.", "Jump", 10),
         new Achievement("JumpAchi25", "Jump 25 times.", "Jump", 25)
+        // Add new achievements here :)
     };
 
     //Popup
@@ -35,7 +36,7 @@ public class AchievementSystem : MonoBehaviour
         //Get components
         achievementIconHolder.GetComponent<Image>();
         achievementDescription.GetComponent<TMP_Text>();
-
+        
         // Setup initial achievement stats
         jumps = 0;
 
@@ -102,7 +103,6 @@ public class Achievement
     public string description;
     public string pointOfInterest;
     public int countGoal;
-    public bool achievementReached;
 
     public Achievement(string Name, string Description, string POI, int CountGoal)
     {
@@ -110,6 +110,5 @@ public class Achievement
         description = Description;
         pointOfInterest = POI;
         countGoal = CountGoal;
-        achievementReached = false;
     }
 }

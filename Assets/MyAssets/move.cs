@@ -48,19 +48,25 @@ public class move : MonoBehaviour
 
             if (controller.isGrounded)
             {
-                if (verticalInput > 0f)
+                if (verticalInput > 0f){
                     animator.SetBool("running", true);
-                else
+                    SoundManager.PlaySoundContinuously("Running");
+                }
+                else{
                     animator.SetBool("running", false);
-
+                    SoundManager.PlaySoundStop();
+                }
+                    
                 moveVelocity = transform.forward * _speed * verticalInput;
                 turnVelocity = transform.up * _rotationSpeed * horizontalInput;
                 if (Input.GetButtonDown("Jump"))
                 {
+                    SoundManager.PlaySoundStop(); //Stop walking sound
+                    SoundManager.PlaySound("Jump");
+                    
                     //Achievement
                     PointOfInterest("Jump");
 
-                    SoundManager.PlaySound("Jump");
 
                     animator.SetTrigger("jumping");
                     moveVelocity.y = _jumpSpeed;
