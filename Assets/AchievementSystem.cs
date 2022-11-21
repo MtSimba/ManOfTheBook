@@ -4,15 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-//TODO: Bug when starting from Main Menu scene, where AchievementSystem is not initialized mby? Jump achi doesnt work
-
 public class AchievementSystem : MonoBehaviour
 {
     //Stats to be monitored
     int jumps;
 
     // List of achievements
-    // TODO: Use these for Achievement Menu
     public static List<Achievement> achievementList = new List<Achievement> 
     {
         new Achievement("JumpAchi1", "Jump 1 time.", "Jump", 1),
@@ -26,31 +23,31 @@ public class AchievementSystem : MonoBehaviour
     public GameObject popUp;
     public Image achievementIconHolder;
     public TMP_Text achievementDescription;
+
     
 
     // Start is called before the first frame update
     void Start()
     {
-        //Resetting achievements - delete layer when we save games
+        //Resetting achievements - delete later when we save games
         PlayerPrefs.DeleteAll();
 
         //Get components
         achievementIconHolder.GetComponent<Image>();
+        achievementDescription.GetComponent<TMP_Text>();
 
         // Setup initial achievement stats
         jumps = 0;
 
         // Subscribe to events
         move.PointOfInterest += POIReached;
-
-        // We need to make sure that all achievements are saved, also when the game is quit and reopened!
     }
 
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
-
+        // Unsubscribe to events
+        move.PointOfInterest -= POIReached;
     }
 
 
@@ -68,11 +65,10 @@ public class AchievementSystem : MonoBehaviour
 
         foreach (Achievement achievement in achievementList)
         {
-            if (achievement.pointOfInterest == poi && achievement.achievementReached != true && count >= achievement.countGoal)
-            {
-                achievement.achievementReached = true;
+            string achievementKey = baseAchievementKey + achievement.name;
 
-                string achievementKey = baseAchievementKey + achievement.name;
+            if (achievement.pointOfInterest == poi && PlayerPrefs.GetInt(achievementKey) != 1 && count >= achievement.countGoal)
+            {
                 PlayerPrefs.SetInt(achievementKey, 1);
 
                 // Debug.Log("Unlocked " + achievementKey);
@@ -91,7 +87,7 @@ public class AchievementSystem : MonoBehaviour
     {
         popUp.SetActive(true);
 
-        //TODO: Play achievement sound
+        SoundManager.PlaySound("Achievement");
         
         yield return new WaitForSeconds(3);
 
