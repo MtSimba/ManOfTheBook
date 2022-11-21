@@ -61,7 +61,8 @@ public class PlayerCombat : MonoBehaviour
             
             SoundManager.PlaySound("attack");
 
-            enemy.GetComponent<EnemyBehaviour>().TakeDamage(attackDamage);
+            //enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
+            enemy.GetComponent<bossController>().TakeDamage(attackDamage);
         }
 
     }

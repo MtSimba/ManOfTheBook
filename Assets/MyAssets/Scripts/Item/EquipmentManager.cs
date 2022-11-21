@@ -33,7 +33,6 @@ public class EquipmentManager : MonoBehaviour
 
     Equipment[] currentEquipment;
     SkinnedMeshRenderer[] currentMeshes;
-
     public SkinnedMeshRenderer targetMesh;
 
     // Callback for when an item is equipped
@@ -92,13 +91,19 @@ public class EquipmentManager : MonoBehaviour
             onEquipmentChanged.Invoke(newItem, oldItem);
 
         currentEquipment[slotIndex] = newItem;
-        Debug.Log(newItem.name + " equipped!");
+        SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newItem.mesh);
+        newMesh.transform.parent = targetMesh.transform;
 
-        if (newItem.prefab)
+        newMesh.bones = targetMesh.bones;
+        newMesh.rootBone = targetMesh.rootBone;
+        currentMeshes[slotIndex] = newMesh;
+        //Debug.Log(newItem.name + " equipped!");
+
+        /*if (newItem.mesh)
         {
-            AttachToMesh(newItem.prefab, slotIndex);
+            AttachToMesh(newItem.mesh, slotIndex);
         }
-        //equippedItems [itemIndex] = newMesh.gameObject;
+        //equippedItems [itemIndex] = newMesh.gameObject;*/
 
     }
 

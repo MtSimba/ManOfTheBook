@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
@@ -20,11 +21,11 @@ public class Interactable : MonoBehaviour
     {
         // If we are currently being focused
         // and we haven't already interacted with the object
-        if (isFocus )
+        if (isFocus)
         {
             // If we are close enough
             float distance = Vector3.Distance(player.position, interactionTransform.position);
-            if (distance <= radius)
+            if (distance < radius)
             {
                 // Interact with the object
                 Interact();

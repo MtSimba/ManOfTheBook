@@ -18,4 +18,4 @@ MonoBehaviour:
   equipSlot: 0
   armorModifier: 10
   damageModifier: 0
-  prefab: {fileID: 1736649503853980317, guid: 3b836528b9b197f47b9b7442f3027df4, type: 3}
+  mesh: {fileID: 9223069684666251578, guid: e43e04edb7327b3418701c8c0732169d, type: 3}

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16360161471ea4347832c745df1af8c7, type: 3}
-  m_Name: test item
+  m_Script: {fileID: 11500000, guid: 71663508e44e7fe48941842109b8a269, type: 3}
+  m_Name: Key
   m_EditorClassIdentifier: 
-  name: test item
-  icon: {fileID: 21300000, guid: 3a467689851eab6448872a39fa924dea, type: 3}
+  name: New Item
+  icon: {fileID: 0}
   isDefaultItem: 0
+  mesh: {fileID: 0}
