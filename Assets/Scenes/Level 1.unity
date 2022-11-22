@@ -27414,6 +27414,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6827d22c8693afc488227baf9ccebc02, type: 3}
+--- !u!114 &1609096013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3958414532130859874, guid: 53842c1ea691adb4d88ee57ba6bd0861, type: 3}
+  m_PrefabInstance: {fileID: 816484895}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94577e2ff7f6bee4dae8417efb8f2f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1609402373 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7714688413934457986, guid: 838fb60344c0f8d4ca6144bf7e06fc04, type: 3}
@@ -39403,6 +39414,7 @@ MonoBehaviour:
   focus: {fileID: 0}
   _healthbar: {fileID: 1324166210}
   attackDamage: 50
+  sceneChanger: {fileID: 1609096013}
 --- !u!143 &4540228999402754145
 CharacterController:
   m_ObjectHideFlags: 0
