@@ -4883,7 +4883,7 @@ GameObject:
   - component: {fileID: 1785774057575594204}
   - component: {fileID: 8244663463594126082}
   m_Layer: 0
-  m_Name: vfx_water_projectile 1
+  m_Name: vfx_water_projectile
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
