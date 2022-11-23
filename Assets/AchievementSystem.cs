@@ -41,7 +41,7 @@ public class AchievementSystem : MonoBehaviour
         jumps = 0;
 
         // Subscribe to events
-        move.PointOfInterest += POIReached;
+        PlayerMovement.PointOfInterest += POIReached;
     }
 
 

@@ -6,7 +6,7 @@ using TMPro;
 
 public class AchievementMenu : MonoBehaviour
 {
-    public static bool gamePaused = false;
+    private static bool gamePaused = false;
     public GameObject achievementsMenuUI;
     public GameObject pauseMenuUI;
 
@@ -64,21 +64,26 @@ public class AchievementMenu : MonoBehaviour
         }
     }
 
-    public void Resume() {
-        achievementsMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        gamePaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    private void Resume() {
+        if (!pauseMenuUI.activeSelf){
+            achievementsMenuUI.SetActive(false);
+            Time.timeScale = 1f;
+            gamePaused = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        
     }
 
-    public void Pause() {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        achievementsMenuUI.SetActive(true);
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 0f;
-        gamePaused = true;
+    private void Pause() {
+        if (!pauseMenuUI.activeSelf){
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            achievementsMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+            gamePaused = true;
+        }
+        
 
 
         //Refresh achievements
