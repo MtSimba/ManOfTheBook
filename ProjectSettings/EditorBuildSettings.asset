@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/IntroDialog.unity
     guid: 217d319b1be8ce64abaeff9291570262
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
+    path: Assets/Scenes/Level 1/Level 1.unity
     guid: 541aaef47d5f9224c9c4e3d7e2538c83
   - enabled: 1
     path: Assets/Scenes/Level1Outro.unity
