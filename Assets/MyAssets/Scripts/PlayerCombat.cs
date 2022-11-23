@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 
 public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
-    
+
     public Transform attackPoint;
     public LayerMask enemies;
 
@@ -28,7 +29,7 @@ public class PlayerCombat : MonoBehaviour
         alreadyAttacked = false;
         currentHealth = maxHealth;
 
-        _healthbar.UpdateHealthbar(maxHealth,currentHealth);
+        _healthbar.UpdateHealthbar(maxHealth, currentHealth);
     }
 
     // Update is called once per frame
@@ -42,7 +43,8 @@ public class PlayerCombat : MonoBehaviour
             alreadyAttacked = true;
             Attack();
         }
-        else{
+        else
+        {
             alreadyAttacked = false;
         }
 
@@ -58,11 +60,11 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("hit enemy!");
-            
+
             SoundManager.PlaySound("Attack");
 
-            enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
-            // enemy.GetComponent<bossController>().TakeDamage(attackDamage);
+            // enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
+            enemy.GetComponent<bossController>().TakeDamage(attackDamage);
         }
 
     }

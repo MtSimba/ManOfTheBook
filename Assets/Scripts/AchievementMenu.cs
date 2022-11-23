@@ -64,7 +64,7 @@ public class AchievementMenu : MonoBehaviour
         }
     }
 
-    private void Resume() {
+    public void Resume() {
         if (!pauseMenuUI.activeSelf){
             achievementsMenuUI.SetActive(false);
             Time.timeScale = 1f;
@@ -75,7 +75,7 @@ public class AchievementMenu : MonoBehaviour
         
     }
 
-    private void Pause() {
+    public void Pause() {
         if (!pauseMenuUI.activeSelf){
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

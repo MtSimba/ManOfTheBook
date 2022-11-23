@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class bossController : MonoBehaviour
 {
@@ -26,7 +27,8 @@ public class bossController : MonoBehaviour
     public bool playerInAttackRange;
     public float lookRadius;
 
-
+    public PlayableDirector timeline;
+    public GameObject outroCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -117,12 +119,13 @@ public class bossController : MonoBehaviour
     private void DestroyEnemy()
     {
         dropItem();
+        PlayLevel1Outro();
         Destroy(gameObject);
     }
 
     void dropItem()
     {
-        Instantiate(drop,transform.position, Quaternion.identity);
+        Instantiate(drop, transform.position, Quaternion.identity);
     }
 
 
@@ -133,5 +136,11 @@ public class bossController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackRange);
 
+    }
+
+    private void PlayLevel1Outro()
+    {
+        outroCanvas.SetActive(true);
+        timeline.Play();
     }
 }

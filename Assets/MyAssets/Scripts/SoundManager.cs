@@ -28,11 +28,10 @@ public class SoundManager : MonoBehaviour
 
     public static void PlaySound(string soundType){
         switch(soundType){
-            case "Attack": // TODO: Doesnt work
+            case "Attack":
                 audioSource.PlayOneShot(swordHitSound);
                 break;
             case "Jump":
-                Debug.Log("Jumping soundmanager");
                 audioSource.PlayOneShot(jumpSound);
                 break;
             case "Achievement":

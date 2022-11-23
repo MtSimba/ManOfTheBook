@@ -78,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
                 turnVelocity = transform.up * _rotationSpeed * horizontalInput;
                 if (Input.GetButtonDown("Jump"))
                 {
-                    Debug.Log("Jumping");
                     SoundManager.PlaySoundStop(); //Stop walking sound
                     SoundManager.PlaySound("Jump");
                     
