@@ -9,10 +9,12 @@ public class AbilitySystem
     private float cooldown;
     private float temp;
     private bool isOnCooldown;
+    private Animator Myanimator;
     // Create the different abilities
-    public AbilitySystem(Camera cam, Transform firePoint)
+    public AbilitySystem(Camera cam, Transform firePoint, Animator animator)
     {
         abilitiesList = new List<Ability>();
+        Myanimator = animator;
 
         abilitiesList.Add(new Ability
         {
@@ -75,23 +77,27 @@ public class AbilitySystem
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
+                Myanimator.SetTrigger("spell_cast");
                 abilitiesList[0].projectileShooter.ShootProjectile();
                 activateCooldown();
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                Myanimator.SetTrigger("spell_cast");
                 abilitiesList[1].projectileShooter.ShootProjectile();
                 activateCooldown();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
+                Myanimator.SetTrigger("spell_cast");
                 abilitiesList[2].projectileShooter.ShootProjectile();
                 activateCooldown();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
+                Myanimator.SetTrigger("spell_cast");
                 abilitiesList[3].projectileShooter.ShootProjectile();
                 activateCooldown();
             }

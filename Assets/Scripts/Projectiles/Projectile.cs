@@ -15,8 +15,8 @@ public class Projectile : MonoBehaviour
         if(co.gameObject.tag != "Bullet" && co.gameObject.tag != "Player" && !collided)
         {
             collided = true;
-            Collider[] hitEnemies = Physics.OverlapSphere(co.gameObject.transform.position, 10, enemies);
-            Collider[] hitBoss = Physics.OverlapSphere(co.gameObject.transform.position, 10, boss);
+            Collider[] hitEnemies = Physics.OverlapSphere(co.gameObject.transform.position, 2, enemies);
+            Collider[] hitBoss = Physics.OverlapSphere(co.gameObject.transform.position, 2, boss);
 
             foreach (Collider enemy in hitEnemies)
             {

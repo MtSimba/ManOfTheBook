@@ -14905,6 +14905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1935081395}
   firePoint: {fileID: 1341308475}
+  animator: {fileID: 0}
   uiAbilityBar: {fileID: 1738154728}
 --- !u!4 &1104884172
 Transform:
@@ -27824,7 +27825,6 @@ GameObject:
   - component: {fileID: 4540228999402754137}
   - component: {fileID: 4540228999402754142}
   - component: {fileID: 4540228999402754146}
-  - component: {fileID: 4540228999402754139}
   - component: {fileID: 4540228999402754145}
   - component: {fileID: 4540228999402754149}
   m_Layer: 6
@@ -29968,20 +29968,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 20
   items: []
---- !u!136 &4540228999402754139
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782702501505213319}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4540228999402754142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29999,6 +29985,9 @@ MonoBehaviour:
   enemies:
     serializedVersion: 2
     m_Bits: 256
+  boss:
+    serializedVersion: 2
+    m_Bits: 0
   maxHealth: 500
   focus: {fileID: 0}
   _healthbar: {fileID: 1324166210}

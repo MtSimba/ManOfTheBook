@@ -20,6 +20,7 @@ public class PlayerCombat : MonoBehaviour
     private int currentHealth;
 
     private bool alreadyAttacked;
+    private bool blocking;
     public Interactable focus;
 
     [SerializeField] private healthbar _healthbar;
@@ -38,13 +39,28 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (EventSystem.current.IsPointerOverGameObject())
             return;
+
+        if (Input.GetMouseButton(1))
+        {
+            animator.SetBool("blocking", true);
+            blocking = true;
+        }
+        else
+        {
+            animator.SetBool("blocking", false);
+            blocking = false;
+        }
+
+
 
         if (!alreadyAttacked && Input.GetMouseButtonDown(0))
         {
             alreadyAttacked = true;
             Attack();
+
         }
         else
         {
@@ -58,8 +74,8 @@ public class PlayerCombat : MonoBehaviour
     {
         animator.SetTrigger("attack");
 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 10, enemies);
-        Collider[] hitBoss = Physics.OverlapSphere(attackPoint.position, 10, boss);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 1, enemies);
+        Collider[] hitBoss = Physics.OverlapSphere(attackPoint.position, 1, boss);
 
         foreach (Collider enemy in hitEnemies)
         {
@@ -78,18 +94,21 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        _healthbar.UpdateHealthbar(maxHealth, currentHealth);
-
-
-        animator.SetTrigger("hurt");
-
-        if (currentHealth <= 0)
+        if (!blocking)
         {
-            dead = true;
-            animator.SetTrigger("death");
-            Invoke(nameof(Death), 6f);
+            currentHealth -= damage;
+            _healthbar.UpdateHealthbar(maxHealth, currentHealth);
 
+
+            animator.SetTrigger("hurt");
+
+            if (currentHealth <= 0)
+            {
+                dead = true;
+                animator.SetTrigger("death");
+                Invoke(nameof(Death), 6f);
+
+            }
         }
     }
 
