@@ -27,8 +27,6 @@ public class bossController : MonoBehaviour
     public bool playerInAttackRange;
     public float lookRadius;
 
-    public PlayableDirector timeline;
-    public GameObject outroCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -119,7 +117,6 @@ public class bossController : MonoBehaviour
     private void DestroyEnemy()
     {
         dropItem();
-        PlayLevel1Outro();
         Destroy(gameObject);
     }
 
@@ -138,9 +135,4 @@ public class bossController : MonoBehaviour
 
     }
 
-    private void PlayLevel1Outro()
-    {
-        outroCanvas.SetActive(true);
-        timeline.Play();
-    }
 }

@@ -38,32 +38,24 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveVelocity;
     private float turnVelocity;
 
-    private bool isGrounded;
-
     //Achievement
     public static event Action<string> PointOfInterest;
 
-    void Start()
-    {
-
-        cam = Camera.main;
-    }
 
     void Update()
     {
-        isGrounded = controller.isGrounded;
         if (!instance.GetComponent<PlayerCombat>().isDead())
         {
 
             interact();
 
-            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             animator.SetFloat("Horizontal", move.x);
             animator.SetFloat("Vertical", move.z);
 
             handleRotation(move);
 
-            if (isGrounded)
+            if (controller.isGrounded)
             {
                 if (Input.GetKeyDown(KeyCode.LeftControl))
                 {
@@ -92,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    isGrounded = false;
                     SoundManager.PlaySoundStop(); //Stop walking sound
                     SoundManager.PlaySound("Jump");
                     
@@ -104,8 +95,8 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 move.y += _gravity * Time.deltaTime;
-                Vector3 cameraRelativeMovementJump = covertToCameraSpace(move);
-                controller.Move(cameraRelativeMovementJump * Time.deltaTime);
+                ///Vector3 cameraRelativeMovementJump = covertToCameraSpace(move);
+                controller.Move(move * Time.deltaTime);
                
             }
 

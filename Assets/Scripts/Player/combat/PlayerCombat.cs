@@ -75,7 +75,13 @@ public class PlayerCombat : MonoBehaviour
         animator.SetTrigger("attack");
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 1, enemies);
-        Collider[] hitBoss = Physics.OverlapSphere(attackPoint.position, 1, boss);
+        Collider[] hitBoss = Physics.OverlapSphere(attackPoint.position, 2, boss);
+
+        foreach (Collider boss in hitBoss)
+        {
+            Debug.Log("hit boss!");
+            boss.GetComponent<bossController>().TakeDamage(attackDamage);
+        }
 
         foreach (Collider enemy in hitEnemies)
         {
@@ -84,11 +90,7 @@ public class PlayerCombat : MonoBehaviour
 
         }
 
-        foreach (Collider boss in hitBoss)
-        {
-            Debug.Log("hit boss!");
-            boss.GetComponent<bossController>().TakeDamage(attackDamage);
-        }
+   
 
     }
 
