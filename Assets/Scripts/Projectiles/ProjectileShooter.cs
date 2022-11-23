@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ProjectileShooter : MonoBehaviour
 {
@@ -40,7 +41,10 @@ public class ProjectileShooter : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
+        {
             destination = hit.point;
+
+        }
         else
             destination = ray.GetPoint(1000);
 
@@ -51,5 +55,6 @@ public class ProjectileShooter : MonoBehaviour
     {
         var projectileObj = Instantiate(projectile, firePoint.position, Quaternion.identity) as GameObject;
         projectileObj.GetComponent<Rigidbody>().velocity = (destination - firePoint.position).normalized * projectileSpeed;
+
     }
 }

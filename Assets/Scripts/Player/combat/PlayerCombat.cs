@@ -11,6 +11,9 @@ public class PlayerCombat : MonoBehaviour
 
     public Transform attackPoint;
     public LayerMask enemies;
+    public LayerMask boss;
+
+
 
     private bool dead;
     public int maxHealth = 100;
@@ -55,16 +58,20 @@ public class PlayerCombat : MonoBehaviour
     {
         animator.SetTrigger("attack");
 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemies);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 10, enemies);
+        Collider[] hitBoss = Physics.OverlapSphere(attackPoint.position, 10, boss);
 
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("hit enemy!");
+            enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
 
-            SoundManager.PlaySound("Attack");
+        }
 
-            // enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
-            enemy.GetComponent<bossController>().TakeDamage(attackDamage);
+        foreach (Collider boss in hitBoss)
+        {
+            Debug.Log("hit boss!");
+            boss.GetComponent<bossController>().TakeDamage(attackDamage);
         }
 
     }

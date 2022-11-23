@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - LevelChanger
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - enemies
   - WhatIsObstacle
   - Interactable
-  - 
+  - boss
   - 
   - 
   - 
