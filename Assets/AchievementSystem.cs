@@ -8,15 +8,18 @@ public class AchievementSystem : MonoBehaviour
 {
     //Stats to be monitored
     int jumps;
+    int fireballs;
 
     // List of achievements
     public static List<Achievement> achievementList = new List<Achievement> 
     {
-        new Achievement("JumpAchi1", "Jump 1 time.", "Jump", 1),
-        new Achievement("JumpAchi3", "Jump 3 times.", "Jump", 3),
-        new Achievement("JumpAchi5", "Jump 5 times.", "Jump", 5),
-        new Achievement("JumpAchi10", "Jump 10 times.", "Jump", 10),
-        new Achievement("JumpAchi25", "Jump 25 times.", "Jump", 25)
+        new Achievement("Jump1", "Jump 1 time.", "Jump", 1),
+        new Achievement("Jump3", "Jump 3 times.", "Jump", 3),
+        new Achievement("Jump5", "Jump 5 times.", "Jump", 5),
+        new Achievement("Jump10", "Jump 10 times.", "Jump", 10),
+        new Achievement("Jump25", "Jump 25 times.", "Jump", 25),
+        new Achievement("Fireball2", "Throw 2 fireballs.", "Fireball", 2),
+        new Achievement("Fireball5", "Throw 5 fireballs.", "Fireball", 5)
         // Add new achievements here :)
     };
 
@@ -39,16 +42,19 @@ public class AchievementSystem : MonoBehaviour
         
         // Setup initial achievement stats
         jumps = 0;
+        fireballs = 0;
 
         // Subscribe to events
         PlayerMovement.PointOfInterest += POIReached;
+        AbilitySystem.PointOfInterest += POIReached;
     }
 
 
     void OnDestroy()
     {
         // Unsubscribe to events
-        move.PointOfInterest -= POIReached;
+        PlayerMovement.PointOfInterest -= POIReached;
+        AbilitySystem.PointOfInterest -= POIReached;
     }
 
 
@@ -57,6 +63,9 @@ public class AchievementSystem : MonoBehaviour
         if(poi == "Jump"){
             jumps = jumps + 1;
             CheckAchievements(poi, jumps);
+        } else if (poi == "Fireball"){
+            fireballs = fireballs + 1;
+            CheckAchievements(poi, fireballs);
         }
     }
 

@@ -13,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemies;
 
     private bool dead;
+    private bool enemyHit;
     public int maxHealth = 100;
     private int currentHealth;
 
@@ -53,6 +54,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Attack()
     {
+        enemyHit = false;
         animator.SetTrigger("attack");
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemies);
@@ -60,11 +62,16 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("hit enemy!");
-
-            SoundManager.PlaySound("Attack");
+            
+            enemyHit = true;
+            SoundManager.PlaySound("AttackHit");
 
             // enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
             enemy.GetComponent<bossController>().TakeDamage(attackDamage);
+        }
+
+        if (!enemyHit){
+            SoundManager.PlaySound("AttackMiss");
         }
 
     }

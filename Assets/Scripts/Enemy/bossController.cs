@@ -140,6 +140,7 @@ public class bossController : MonoBehaviour
 
     private void PlayLevel1Outro()
     {
+        BackgroundMusicManager.StopBackgroundMusic();
         outroCanvas.SetActive(true);
         timeline.Play();
     }

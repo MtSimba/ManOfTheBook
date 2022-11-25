@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AbilitySystem
 {
@@ -9,6 +11,10 @@ public class AbilitySystem
     private float cooldown;
     private float temp;
     private bool isOnCooldown;
+
+    //Achievement
+    public static event Action<string> PointOfInterest;
+
     // Create the different abilities
     public AbilitySystem(Camera cam, Transform firePoint)
     {
@@ -76,23 +82,30 @@ public class AbilitySystem
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 abilitiesList[0].projectileShooter.ShootProjectile();
+                SoundManager.PlaySound("Fireball");
                 activateCooldown();
+
+                //Achievement
+                PointOfInterest("Fireball");
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 abilitiesList[1].projectileShooter.ShootProjectile();
+                SoundManager.PlaySound("Frostball");
                 activateCooldown();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 abilitiesList[2].projectileShooter.ShootProjectile();
+                SoundManager.PlaySound("Fireball");
                 activateCooldown();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 abilitiesList[3].projectileShooter.ShootProjectile();
+                SoundManager.PlaySound("Frostball");
                 activateCooldown();
             }
         }

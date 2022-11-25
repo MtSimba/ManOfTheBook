@@ -6,9 +6,12 @@ public class SoundManager : MonoBehaviour
 {
 
     public static AudioClip swordHitSound;
+    public static AudioClip swordMissSound;
     public static AudioClip jumpSound;
     public static AudioClip achievementSound;
     public static AudioClip runningSound;
+    public static AudioClip fireballSound;
+    public static AudioClip frostballSound;
     static AudioSource audioSource;
 
     public static bool isSoundPlaying = false;
@@ -16,11 +19,13 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Soundmanager start");
         swordHitSound = Resources.Load<AudioClip>("SwordHit");
+        swordMissSound = Resources.Load<AudioClip>("SwordMiss");
         jumpSound = Resources.Load<AudioClip>("Jump");
         achievementSound = Resources.Load<AudioClip>("Achievement");
         runningSound = Resources.Load<AudioClip>("Running");
+        fireballSound = Resources.Load<AudioClip>("Fireball");
+        frostballSound = Resources.Load<AudioClip>("Frostball");
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -28,14 +33,23 @@ public class SoundManager : MonoBehaviour
 
     public static void PlaySound(string soundType){
         switch(soundType){
-            case "Attack":
+            case "AttackHit":
                 audioSource.PlayOneShot(swordHitSound);
+                break;
+            case "AttackMiss":
+                audioSource.PlayOneShot(swordMissSound);
                 break;
             case "Jump":
                 audioSource.PlayOneShot(jumpSound);
                 break;
             case "Achievement":
                 audioSource.PlayOneShot(achievementSound);
+                break;
+            case "Fireball":
+                audioSource.PlayOneShot(fireballSound);
+                break;
+            case "Frostball":
+                audioSource.PlayOneShot(frostballSound);
                 break;
         }
     }
