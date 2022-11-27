@@ -36,7 +36,8 @@ public class UI_Ability_Bar : MonoBehaviour
             RectTransform abilitySlotRectTransform = abilitySlotTransform.GetComponent<RectTransform>();
             abilitySlotRectTransform.anchoredPosition = new Vector2(120f * i, 50f);
             abilitySlotTransform.Find("spellPicture").GetComponent<Image>().sprite = ability.sprite;
-            Debug.Log(ability.sprite);
+            ability.spellCooldown.imageCooldown = abilitySlotTransform.Find("coolDown").GetComponent<Image>();
+            ability.spellCooldown.imageCooldown.fillAmount = 0.0f;
             abilitySlotTransform.Find("number").GetComponent<TMPro.TextMeshProUGUI>().SetText((i + 1).ToString());
         }
 

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class AbilitySystem
 {
     // Store the abilities that we can use
-    private List<Ability> abilitiesList { get; set; }
+    private List<Ability> abilitiesList;
 
     //Achievement
     public static event Action<string> PointOfInterest;
@@ -22,8 +22,7 @@ public class AbilitySystem
             spells = Spells.Fireball,
             projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_fire_projectile"), firePoint),
             sprite = Resources.Load<Sprite>("Sprites/fireball-red-3"),
-            isOnCooldown = false,
-            cooldownTime = 4,
+            spellCooldown = new SpellCooldown(4),
             keyCode = KeyCode.Alpha1
         });
     }
@@ -40,7 +39,7 @@ public class AbilitySystem
         {
             if (Input.GetKeyDown(ability.keyCode))
             {
-                if (!ability.isOnCooldown)
+                if (!ability.isOnCooldown())
                 {
                     ability.projectileShooter.ShootProjectile();
                     SoundManager.PlaySound(ability.spells.ToString());

@@ -3,33 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Ability
 {
     public Spells spells;
     public ProjectileShooter projectileShooter;
     public Sprite sprite;
-    public float cooldownTime = 3;
-    public bool isOnCooldown { get; set; }
+    public SpellCooldown spellCooldown { get; set; }
     public KeyCode keyCode;
-    private float temp;
 
     public void activateCooldown()
     {
-        isOnCooldown = true;
-        temp = 1;
+        this.spellCooldown.activateCooldown();
     }
 
     public void isAbilityOnCooldown()
     {
-        if (isOnCooldown == true)
-        {
-            temp -= 1 / cooldownTime * Time.deltaTime;
-            if (temp <= 0)
-            {
-                isOnCooldown = false;
-            }
-        }
+        this.spellCooldown.isAbilityOnCooldown();
+    }
+
+    public bool isOnCooldown()
+    {
+        return this.spellCooldown.isOnCooldown;
     }
 }
 

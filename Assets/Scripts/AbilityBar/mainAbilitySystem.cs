@@ -34,8 +34,7 @@ public class mainAbilitySystem : MonoBehaviour
                 spells = Spells.Frostball,
                 projectileShooter = new ProjectileShooter(cam, GameObject.Find("vfx_water_projectile"), firePoint),
                 sprite = Resources.Load<Sprite>("Sprites/fireball-sky-3"),
-                isOnCooldown = false,
-                cooldownTime = 2,
+                spellCooldown = new SpellCooldown(2),
                 keyCode = KeyCode.Alpha2
             });
             this.uiAbilityBar.update();
