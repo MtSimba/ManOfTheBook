@@ -18,7 +18,7 @@ public class AchievementSystem : MonoBehaviour
         new Achievement("Jump5", "Jump 5 times.", "Jump", 5),
         new Achievement("Jump10", "Jump 10 times.", "Jump", 10),
         new Achievement("Jump25", "Jump 25 times.", "Jump", 25),
-        new Achievement("Fireball2", "Throw 2 fireballs.", "Fireball", 2),
+        new Achievement("Fireball2", "Throw 2 fireballs. \nFrostball has been unlocked!", "Fireball", 2),
         new Achievement("Fireball5", "Throw 5 fireballs.", "Fireball", 5)
         // Add new achievements here :)
     };

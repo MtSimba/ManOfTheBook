@@ -20,6 +20,11 @@ public class UI_Ability_Bar : MonoBehaviour
         updateVisual();
     }
 
+    public void update()
+    {
+        this.updateVisual();
+    }
+
     private void updateVisual()
     {
         List<Ability> abilitiesList = abilitySystem.getAbilitiesList();
