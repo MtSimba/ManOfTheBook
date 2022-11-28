@@ -9,6 +9,7 @@ public class mainAbilitySystem : MonoBehaviour
     public static mainAbilitySystem Instance { get; private set; }
     public Camera cam;
     public Transform firePoint;
+    public Animator animator;
 
     [SerializeField] private UI_Ability_Bar uiAbilityBar;
 
@@ -19,7 +20,7 @@ public class mainAbilitySystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.abilitySystem = new AbilitySystem(cam, firePoint);
+        this.abilitySystem = new AbilitySystem(cam, firePoint, animator);
         this.uiAbilityBar.setAbilitySystem(abilitySystem);
     }
 

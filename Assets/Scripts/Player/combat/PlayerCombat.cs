@@ -11,6 +11,9 @@ public class PlayerCombat : MonoBehaviour
 
     public Transform attackPoint;
     public LayerMask enemies;
+    public LayerMask boss;
+
+
 
     private bool dead;
     private bool enemyHit;
@@ -18,6 +21,7 @@ public class PlayerCombat : MonoBehaviour
     private int currentHealth;
 
     private bool alreadyAttacked;
+    private bool blocking;
     public Interactable focus;
 
     [SerializeField] private healthbar _healthbar;
@@ -39,6 +43,19 @@ public class PlayerCombat : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
+        if (Input.GetMouseButton(1))
+        {
+            animator.SetBool("blocking", true);
+            blocking = true;
+        }
+        else
+        {
+            animator.SetBool("blocking", false);
+            blocking = false;
+        }
+
+
+
         if (!alreadyAttacked && Input.GetMouseButtonDown(0))
         {
             alreadyAttacked = true;
@@ -57,16 +74,23 @@ public class PlayerCombat : MonoBehaviour
         enemyHit = false;
         animator.SetTrigger("attack");
 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemies);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 1, enemies);
+        Collider[] hitBoss = Physics.OverlapSphere(attackPoint.position, 2, boss);
+
+        foreach (Collider boss in hitBoss)
+        {
+            Debug.Log("hit boss!");
+            boss.GetComponent<bossController>().TakeDamage(attackDamage);
+        }
 
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("hit enemy!");
-            
+
             enemyHit = true;
             SoundManager.PlaySound("AttackHit");
 
-            // enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
+            enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
             enemy.GetComponent<bossController>().TakeDamage(attackDamage);
         }
 
@@ -78,18 +102,21 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        _healthbar.UpdateHealthbar(maxHealth, currentHealth);
-
-
-        animator.SetTrigger("hurt");
-
-        if (currentHealth <= 0)
+        if (!blocking)
         {
-            dead = true;
-            animator.SetTrigger("death");
-            Invoke(nameof(Death), 6f);
+            currentHealth -= damage;
+            _healthbar.UpdateHealthbar(maxHealth, currentHealth);
 
+
+            animator.SetTrigger("hurt");
+
+            if (currentHealth <= 0)
+            {
+                dead = true;
+                animator.SetTrigger("death");
+                Invoke(nameof(Death), 6f);
+
+        }
         }
     }
 

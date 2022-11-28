@@ -43,17 +43,19 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(target.position, transform.position);
+        
         playerInAttackRange = Physics.CheckSphere(transform.position, AttackRange, playerMask);
 
 
         if (!dead && distance <= lookRadius)
         {
-            agent.SetDestination(target.position);
             animator.SetBool("running", true);
+            agent.SetDestination(target.position);
 
-            if (playerInAttackRange)
+            if (distance <= agent.stoppingDistance)
             {
-                //attack
+                animator.SetBool("running", false);
+                FaceTarget();          
                 AttackPlayer();
             }
         }
@@ -66,13 +68,9 @@ public class EnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
-        agent.SetDestination(transform.position);
-
-        transform.LookAt(target);
 
         if (!alreadyAttacked)
         {
-            animator.SetBool("running", false);
 
             Collider[] hitPlayer = Physics.OverlapSphere(target.position, AttackRange, playerMask);
 
@@ -112,6 +110,13 @@ public class EnemyController : MonoBehaviour
             Invoke(nameof(DestroyEnemy), 6f);
 
         }
+    }
+
+    void FaceTarget()
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
     private void DestroyEnemy()
