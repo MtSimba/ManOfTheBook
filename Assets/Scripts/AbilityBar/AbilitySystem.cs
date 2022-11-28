@@ -8,7 +8,7 @@ public class AbilitySystem
 {
     // Store the abilities that we can use
     private List<Ability> abilitiesList;
-    private Animator Myanimator;
+    private Animator myAnimator;
 
     //Achievement
     public static event Action<string> PointOfInterest;
@@ -17,7 +17,7 @@ public class AbilitySystem
     public AbilitySystem(Camera cam, Transform firePoint, Animator animator)
     {
         abilitiesList = new List<Ability>();
-        Myanimator = animator;
+        myAnimator = animator;
 
         abilitiesList.Add(new Ability
         {
@@ -43,6 +43,7 @@ public class AbilitySystem
             {
                 if (!ability.isOnCooldown())
                 {
+                    myAnimator.SetTrigger("spell_cast");
                     ability.projectileShooter.ShootProjectile();
                     SoundManager.PlaySound(ability.spells.ToString());
                     ability.activateCooldown();

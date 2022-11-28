@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3291,8 +3291,6 @@ MonoBehaviour:
   AttackRange: 2
   playerInAttackRange: 0
   lookRadius: 5
-  timeline: {fileID: 408227508}
-  outroCanvas: {fileID: 408227503}
 --- !u!1 &188007311 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 128790, guid: 8254b97f18154274db5ff17a46d4d4fa, type: 3}
@@ -7703,16 +7701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &408227503 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2057118943710056279, guid: 954b6872a704202478756bc4da6d6367, type: 3}
-  m_PrefabInstance: {fileID: 2057118943310873080}
-  m_PrefabAsset: {fileID: 0}
---- !u!320 &408227508 stripped
-PlayableDirector:
-  m_CorrespondingSourceObject: {fileID: 2057118943710056268, guid: 954b6872a704202478756bc4da6d6367, type: 3}
-  m_PrefabInstance: {fileID: 2057118943310873080}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &419136737
 Mesh:
   m_ObjectHideFlags: 0
@@ -16137,7 +16125,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.041847225, y: -0.0000000021489142, z: 9.000492e-11, w: 0.99912405}
+  m_LocalRotation: {x: 0.041847218, y: -0.0000000037220276, z: 1.5589306e-10, w: 0.99912405}
   m_LocalPosition: {x: 0.14123468, y: 1.986, z: -16.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -19090,6 +19078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1935081395}
   firePoint: {fileID: 1341308475}
+  animator: {fileID: 4540228999402754136}
   uiAbilityBar: {fileID: 1738154728}
 --- !u!4 &1104884172
 Transform:
@@ -22643,7 +22632,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412307621}
-  m_LocalRotation: {x: 0.04184722, y: -0.000000002148914, z: 9.00049e-11, w: 0.99912405}
+  m_LocalRotation: {x: 0.04184722, y: -1.0440368e-25, z: 4.372835e-27, w: 0.99912405}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24002,6 +23991,14 @@ PrefabInstance:
     - target: {fileID: 3761646158951645247, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
       propertyPath: m_TagString
       value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
+      propertyPath: boss.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
+      propertyPath: enemies.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
@@ -26852,6 +26849,14 @@ PrefabInstance:
     - target: {fileID: 3761646158951645247, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
       propertyPath: m_Name
       value: vfx_water_projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
+      propertyPath: boss.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
+      propertyPath: enemies.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
@@ -34754,6 +34759,9 @@ MonoBehaviour:
   enemies:
     serializedVersion: 2
     m_Bits: 256
+  boss:
+    serializedVersion: 2
+    m_Bits: 0
   maxHealth: 500
   focus: {fileID: 0}
   _healthbar: {fileID: 1324166210}
