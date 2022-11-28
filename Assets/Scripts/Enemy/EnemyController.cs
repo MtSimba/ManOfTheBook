@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("running", true);
             agent.SetDestination(target.position);
 
-            if (distance <= agent.stoppingDistance)
+            if (distance <= agent.stoppingDistance || playerInAttackRange)
             {
                 animator.SetBool("running", false);
                 FaceTarget();          
