@@ -16,6 +16,7 @@ public class PlayerCombat : MonoBehaviour
 
 
     private bool dead;
+    private bool enemyHit;
     public int maxHealth = 100;
     private int currentHealth;
 
@@ -39,7 +40,6 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -60,7 +60,6 @@ public class PlayerCombat : MonoBehaviour
         {
             alreadyAttacked = true;
             Attack();
-
         }
         else
         {
@@ -72,6 +71,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Attack()
     {
+        enemyHit = false;
         animator.SetTrigger("attack");
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 1, enemies);
@@ -86,11 +86,17 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("hit enemy!");
-            enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
 
+            enemyHit = true;
+            SoundManager.PlaySound("AttackHit");
+
+            enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
+            enemy.GetComponent<bossController>().TakeDamage(attackDamage);
         }
 
-   
+        if (!enemyHit){
+            SoundManager.PlaySound("AttackMiss");
+        }
 
     }
 
@@ -110,7 +116,7 @@ public class PlayerCombat : MonoBehaviour
                 animator.SetTrigger("death");
                 Invoke(nameof(Death), 6f);
 
-            }
+        }
         }
     }
 

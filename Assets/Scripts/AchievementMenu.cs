@@ -35,15 +35,15 @@ public class AchievementMenu : MonoBehaviour
         //Setting achievement descriptions
         foreach (Achievement achievement in AchievementSystem.achievementList)
         {
-            if (achievement.name == "JumpAchi1"){
+            if (achievement.name == "Jump1"){
                 jump_1_achievement.text = achievement.description;
-            }else if (achievement.name == "JumpAchi3"){
+            }else if (achievement.name == "Jump3"){
                 jump_3_achievement.text = achievement.description;
-            }else if (achievement.name == "JumpAchi5"){
+            }else if (achievement.name == "Jump5"){
                 jump_5_achievement.text = achievement.description;
-            }else if (achievement.name == "JumpAchi10"){
+            }else if (achievement.name == "Jump10"){
                 jump_10_achievement.text = achievement.description;
-            }else if (achievement.name == "JumpAchi25"){
+            }else if (achievement.name == "Jump25"){
                 jump_25_achievement.text = achievement.description;
             }
         }
@@ -94,19 +94,19 @@ public class AchievementMenu : MonoBehaviour
         checkmarkJump25.enabled = false;
 
         
-        if (PlayerPrefs.GetInt("Achievement-JumpAchi1") == 1){
+        if (PlayerPrefs.GetInt("Achievement-Jump1") == 1){
             checkmarkJump1.enabled = true;
         }
-        if (PlayerPrefs.GetInt("Achievement-JumpAchi3") == 1){
+        if (PlayerPrefs.GetInt("Achievement-Jump3") == 1){
             checkmarkJump3.enabled = true;
         }
-        if (PlayerPrefs.GetInt("Achievement-JumpAchi5") == 1){
+        if (PlayerPrefs.GetInt("Achievement-Jump5") == 1){
             checkmarkJump5.enabled = true;
         }
-        if (PlayerPrefs.GetInt("Achievement-JumpAchi10") == 1){
+        if (PlayerPrefs.GetInt("Achievement-Jump10") == 1){
             checkmarkJump10.enabled = true;
         }
-        if (PlayerPrefs.GetInt("Achievement-JumpAchi25") == 1){
+        if (PlayerPrefs.GetInt("Achievement-Jump25") == 1){
             checkmarkJump25.enabled = true;
         }
         
