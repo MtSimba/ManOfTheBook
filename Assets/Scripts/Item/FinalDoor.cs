@@ -7,8 +7,7 @@ public class FinalDoor : Interactable
 {
     // Start is called before the first frame update
 
-    public PlayableDirector timeline;
-    public GameObject outroCanvas;
+    public SceneChangerScript levelLoader;
 
     public override void Interact()
     {
@@ -37,8 +36,8 @@ public class FinalDoor : Interactable
 
     private void PlayLevel1Outro()
     {
-        outroCanvas.SetActive(true);
-        timeline.Play();
+        //outroCanvas.SetActive(true);
+        levelLoader.GoNextScene();
         Destroy(gameObject);
     }
 }
