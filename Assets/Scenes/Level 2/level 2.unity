@@ -10986,6 +10986,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneChangerWithLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 3958414532130859903, guid: 53842c1ea691adb4d88ee57ba6bd0861, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686945478006053774, guid: 53842c1ea691adb4d88ee57ba6bd0861, type: 3}
+      propertyPath: m_text
+      value: Level 2 - The Holy Enclave
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686945478006053774, guid: 53842c1ea691adb4d88ee57ba6bd0861, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53842c1ea691adb4d88ee57ba6bd0861, type: 3}
 --- !u!1001 &820563687
@@ -18929,6 +18941,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
+      propertyPath: boss.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
+      propertyPath: enemies.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9e75b58e4643b44f94edef63691b2ba, type: 3}
 --- !u!1 &1557238417
@@ -22548,6 +22568,54 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6860a52d7c75b3447bf4f5291c324fd7, type: 3}
+--- !u!1 &1822552000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822552002}
+  - component: {fileID: 1822552001}
+  m_Layer: 0
+  m_Name: test (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1822552001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822552000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4870a20363236429ea25716be40f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1935081395}
+  firePoint: {fileID: 1341308475}
+  animator: {fileID: 4540228999402754136}
+  uiAbilityBar: {fileID: 1738154728}
+--- !u!4 &1822552002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822552000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 566.0765, y: 387.14886, z: -415.4142}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1825974491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7714688415340418265, guid: 838fb60344c0f8d4ca6144bf7e06fc04, type: 3}
@@ -22716,6 +22784,14 @@ PrefabInstance:
     - target: {fileID: 3761646158951645247, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
       propertyPath: m_Name
       value: vfx_water_projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
+      propertyPath: boss.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244663463594126082, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}
+      propertyPath: enemies.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cc64f30142fa2f438a931a3b04a4fd8, type: 3}

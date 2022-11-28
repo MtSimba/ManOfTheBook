@@ -125,7 +125,7 @@ public class bossController : MonoBehaviour
 
     void dropItem()
     {
-        Instantiate(drop, transform.position, Quaternion.identity);
+        Instantiate(drop, transform.position + new Vector3(0,1,0), Quaternion.identity);
     }
 
 
