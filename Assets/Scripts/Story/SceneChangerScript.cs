@@ -8,7 +8,6 @@ public class SceneChangerScript : MonoBehaviour
     public Animator animator;
 
     public void GoNextScene() {
-        Debug.Log("Enabled Introstory loading");
         animator.SetTrigger("FadeOut");
     }
 

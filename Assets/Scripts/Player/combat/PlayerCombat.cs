@@ -13,8 +13,6 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemies;
     public LayerMask boss;
 
-
-
     private bool dead;
     private bool enemyHit;
     public int maxHealth = 100;

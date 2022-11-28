@@ -11,6 +11,8 @@ public class bossController : MonoBehaviour
 
     public LayerMask playerMask;
 
+    public ModalCutsceneManager cutsceneManager;
+
     private bool dead;
     private int currentHealth;
     [SerializeField] public int maxHealth = 100;
@@ -116,6 +118,7 @@ public class bossController : MonoBehaviour
 
     private void DestroyEnemy()
     {
+        cutsceneManager.StartCutscene();
         dropItem();
         Destroy(gameObject);
     }
