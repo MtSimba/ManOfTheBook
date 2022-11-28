@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _jumpSpeed = 3.5f;
 
+    private float directionY;
+
+
     private Vector3 moveVelocity;
     private float turnVelocity;
 
@@ -56,8 +59,26 @@ public class PlayerMovement : MonoBehaviour
             handleRotation(move);
 
             if (controller.isGrounded)
-            {
-                if (Input.GetKeyDown(KeyCode.LeftControl))
+            {    
+                if (Input.GetButtonDown("Jump"))
+                {
+                    SoundManager.PlaySoundStop(); //Stop walking sound
+                    SoundManager.PlaySound("Jump");
+                    
+                    //Achievement
+                    PointOfInterest("Jump");
+
+                    animator.SetTrigger("jumping");
+                    directionY = _jumpSpeed;
+                }
+
+                //move.y += _gravity * Time.deltaTime;
+                ///Vector3 cameraRelativeMovementJump = covertToCameraSpace(move);
+                //controller.Move(move * Time.deltaTime);
+               
+            }
+
+             if (Input.GetKeyDown(KeyCode.LeftControl))
                 {
                     animator.SetTrigger("roll_left");
                 }
@@ -81,26 +102,10 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
 
-                
-                if (Input.GetButtonDown("Jump"))
-                {
-                    SoundManager.PlaySoundStop(); //Stop walking sound
-                    SoundManager.PlaySound("Jump");
-                    
-                    //Achievement
-                    PointOfInterest("Jump");
+            directionY -= _gravity * Time.deltaTime;
 
-                    animator.SetTrigger("jumping");
-                    move.y = _jumpSpeed;
-                }
+            move.y = directionY;
 
-                move.y += _gravity * Time.deltaTime;
-                ///Vector3 cameraRelativeMovementJump = covertToCameraSpace(move);
-                controller.Move(move * Time.deltaTime);
-               
-            }
-
-            move.y += _gravity * Time.deltaTime;
             Vector3 cameraRelativeMovement = covertToCameraSpace(move);
             controller.Move(cameraRelativeMovement * _speed * Time.deltaTime);
             //transform.Rotate(turnVelocity * Time.deltaTime);
